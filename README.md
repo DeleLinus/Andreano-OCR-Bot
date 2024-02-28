@@ -1,6 +1,6 @@
 # Bet OCR Assistant Telegram Bot
 
-![Bet OCR Assistant Logo](/path/to/bet_ocr_assistant_logo.png)
+<!-- ![Bet OCR Assistant Logo](/path/to/bet_ocr_assistant_logo.png) -->
 
 Welcome to Bet OCR Assistant, your dedicated companion for extracting and logging bet information from images on Telegram!
 
