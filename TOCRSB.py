@@ -52,9 +52,8 @@ def TOCR():
         generation_config = {
             "temperature": 0.4,
             "top_p": 1,
-            "top_k": 32,
-            "max_output_tokens": 4096,
-        }
+            "top_k": 32
+            }
 
         safety_settings = [
             {
@@ -75,7 +74,7 @@ def TOCR():
             },
         ]
 
-        model = genai.GenerativeModel(model_name="gemini-pro-vision",
+        model = genai.GenerativeModel(model_name="gemini-1.5-flash",
                                       generation_config=generation_config,
                                       safety_settings=safety_settings)
 
@@ -101,6 +100,7 @@ def TOCR():
         ]
 
         response = model.generate_content(prompt_parts)
+        response.resolve()
         return response.text
 
     def do_gsheet_authentication(user_id):
@@ -130,7 +130,8 @@ def TOCR():
                     gcs_credentials, _ = download_from_gcs(root_bucket_name, "credentials.json")
                     creds_dict = json.loads(gcs_credentials)
                     flow = InstalledAppFlow.from_client_config(creds_dict, SCOPES)
-                    creds = flow.run_local_server(port=0)
+                    # creds = flow.run_local_server(port=0)
+                    creds = flow.run_local_server(open_browser = True)
                 # Save/Upload the new credentials to GCS for the next run
                 upload_to_gcs(root_bucket_name, gcs_file_path, creds.to_json())
 
@@ -157,7 +158,7 @@ def TOCR():
 
         # Iterate over matches and store key-value pairs in the dictionary
         for key, pattern in regex_patterns.items():
-            info_pattern = re.compile(pattern)
+            info_pattern = re.compile(pattern, re.IGNORECASE)
             # Extract information using regular expressions
             info = re.search(info_pattern, text_from_ocr).group(1) if re.search(info_pattern, text_from_ocr) else "Not Provided"
             extracted_values[key] = info

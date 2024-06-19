@@ -1,6 +1,7 @@
 .idea/
 .venv/
 config.txt
+*.zip
 credentials.json
 kagglexcredentials.json
 telegram-ocr-connection-7eb1d30dee09.json
